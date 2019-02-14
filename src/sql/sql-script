@@ -1,0 +1,64 @@
+create database escolastico;
+use escolastico;
+CREATE TABLE alum
+(
+    codigo_alum char(10),
+    nombre_alum char(50),
+    edad_alum_sal char(5),
+	primary key(codigo_alum)
+
+);
+
+CREATE TABLE materia
+(
+    codigo_mat char(10),
+    nombre_mat char(50),
+    primary key(codigo_mat)
+
+);
+
+CREATE TABLE prof
+(
+    codigo_pro char(10),
+    nombre_pro char(50),
+    edad_pro  char(5),
+	primary key(codigo_pro)
+);
+
+CREATE TABLE nota
+(
+    codigo_not char(10),
+	nota_not integer,
+	codigo_alum char(10),
+	codigo_mat char(10),
+	codigo_pro char(10),
+    foreign key (codigo_alum)  references alum(codigo_alum),
+    foreign key (codigo_mat)  references materia(codigo_mat),
+	foreign key (codigo_pro)  references prof(codigo_pro),
+	primary key(codigo_not)
+);
+
+Insert into alum Values ('01','Marco Macias','22');
+Insert into alum Values ('02','Darex Leon','21');
+Insert into alum Values ('03','Jose Rodrigues','22');
+Insert into alum Values ('04','Ramon Peres','40');
+Insert into alum Values ('05','Jose Gonzales','32');
+
+Insert into prof Values ('01','Patricio Navas','42');
+Insert into prof Values ('02','Lucas Garces','32');
+Insert into prof Values ('03','Andres Jacome','52');
+Insert into prof Values ('04','Pepe Sanchez','32');
+Insert into prof Values ('05','Fedrerco Ramirez','52');
+
+Insert into materia Values ('01','Edo');
+Insert into materia Values ('02','Calculo');
+Insert into materia Values ('03','BBDD2');
+Insert into materia Values ('04','Programacion');
+Insert into materia Values ('05','App moviles');
+Insert into materia Values ('06','Emprendedores');
+
+Insert into nota Values ('01','20','02','05','02');
+Insert into nota Values ('02','20','03','03','01');
+Insert into nota Values ('03','20','01','02','04');
+Insert into nota Values ('04','20','05','04','05');
+Insert into nota Values ('05','20','04','01','03');

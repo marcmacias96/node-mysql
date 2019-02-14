@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>News</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+        crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+        <!-- Latest compiled and minified Locales -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+        </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <a href="" class="navbar-brand mx-auto">Registro de Notas</a>
+    </nav>
+   
+    <div class="row cards" style="width: auto; margin: auto auto;">
+        <div class="col-md-3 mt-2 text-center card">
+            <form class="card-body" action="/datos" method="post">
+              <h3 class="card-title">Add Campos</h3>
+              <div class="form-group">
+                    <select class="form-control" name="datos" id="datos">
+                            <option value="" disabled selected>Seleccione un Dato...</option>
+                              <option value="A">Alumonos</option>
+                              <option value="M">Maestros</option>
+                              <option value="MA">Materias</option>
+                     </select> 
+              </div>                      
+              <div class="form-group" >
+                    <input name="codigo" type="text" class="form-control" placeholder="Codigo">
+                  </div>
+              <div class="form-group">
+                <input name="nombre" type="text" class="form-control" placeholder="Nombre">
+              </div>
+              <div class="form-group">
+                <input name="edad" type="text" class="form-control" placeholder="Edad">
+              </div>
+              <input type="submit" class="btn btn-primary">
+            </form>
+          </div>
+
+            <div class="col-md-3 mt-4 card text-center">
+              <h3 class="card-title">Alumonos</h3>
+              <table class="table table-striped table-bordered" data-url="data.json">
+                <tr>
+                  <th data-field="id">ID</th>
+                  <th data-field="nombre">Nombre</th>
+                  <th data-field="edad">Edad</th>
+                  <% for (var i = 0; i < alumnos.length; i ++) { %>
+                    <tr>
+                    <td><%= alumnos[i].codigo_alum %></td>
+                    <td><%= alumnos[i].nombre_alum %></td>
+                    <td><%= alumnos[i].edad_alum %></td>
+                    </tr>
+                <% } %>
+                </tr>
+              </table>
+           </div>
+            <div class="col-md-3 mt-4 card text-center">
+                <h3 class="card-title">Materias</h3>
+                <table class="table table-striped table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
+                <% for (var i = 0; i < materias.length; i ++) { %>
+                    <tr>
+                    <td><%= materias[i].codigo_mat %></td>
+                    <td><%= materias[i].nombre_mat %></td>
+                    </tr>
+                <% } %>
+                </table>
+            </div>
+            <div class="col-md-3 mt-4 card text-center">
+                    <h3 class="card-title">Profesores</h3>
+                    <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                    </tr>
+                    <% for (var i = 0; i < profesores.length; i ++) { %>
+                        <tr>
+                        <td><%= profesores[i].codigo_pro %></td>
+                        <td><%= profesores[i].nombre_pro %></td>
+                        <td><%= profesores[i].edad_pro %></td>
+                        </tr>
+                    <% } %>
+                    </table>
+            </div>
+            <div class="col-md-3 mt-2 text-center card">
+                <form class="card-body" action="/notas" method="post">
+                  <h3 class="card-title">Add Notas</h3>  
+                  <div class="form-group">
+                    <input name="codigo" type="text" class="form-control" placeholder="Codigo Alumno">
+                  </div>
+                  <div class="form-group">
+                    <select class="form-control" name="mats" id="mats">
+                      <option value="" disabled selected>Seleccione un Dato...</option>
+                        <% for (var i = 0; i < materias.length; i ++) {%>
+                        <option><%= materias[i].nombre_mat %></a>
+                        <% } %>
+                     </select> 
+                  </div>   
+                  <div class="form-group">
+                    <select class="form-control" name="prof" id="prof">
+                      <option value="" disabled selected>Seleccione un Maestro...</option>
+                        <% for (var i = 0; i < profesores.length; i ++) {%>
+                        <option><%= profesores[i].nombre_pro %></a>
+                        <% } %>
+                     </select> 
+                  </div>   
+                  <div class="form-group">
+                    <input name="nota" type="text" class="form-control" placeholder="Nota">
+                  </div>
+                  <input type="submit" class="btn btn-primary">
+                  
+                </form>
+              </div>
+            <div class="col-md-9 mt-4 card text-center">
+            <form lass="card-body"  action="/delete" method="post" >
+              <h3 class="card-title">Notas</h3>
+              <table id ="table" class="table table-striped table-bordered " >
+              <tr>
+                  <th>ALUMNO</th>
+                  <th>MATERIA</th>
+                  <th>NOTA</th>
+                  <th>BORRAR</th>
+              </tr>
+              <% for (var i = 0; i < notas.length; i ++) { %>
+                  <tr>
+                  
+                  <td data-field="nombre_alum"><%= notas[i].nombre_alum %></td>
+                  <td data-field="nombre_mat"><%= notas[i].nombre_mat %></td>
+                  <td data-field="nota_not"><%= notas[i].nota_not %></td>.
+                  <td data-field="state" data-checkbox="true"><input type="checkbox" value="true" name="bor"></td>
+                  </tr>
+                  
+              <% } %>
+              </table>
+              <input type="submit" id="button"  class="btn btn-primary" value="Eliminar">
+            </form>
+           
+            
+            <script>
+                  var $table = $('#table'),
+                  $button = $('#button');
+              $(function () {
+                  $button.click(function () {
+                      alert('getSelections: ' + JSON.stringify($table.bootstrapTable('getOptions')));
+                  });
+              });
+            </script>
+              </div>
+            </div>
+    
+    
+  </body>
+</html>
+    
